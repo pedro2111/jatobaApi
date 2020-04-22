@@ -51,7 +51,13 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.GET, "/topicos").permitAll()
 		.antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
+		.antMatchers(HttpMethod.GET, "/categorias/*").permitAll()
+		.antMatchers(HttpMethod.GET, "/fornecedores/*").permitAll()
+		.antMatchers(HttpMethod.GET, "/boletos/*").permitAll()
+		.antMatchers(HttpMethod.GET, "/boletos").permitAll()
+		.antMatchers(HttpMethod.GET, "/clearCache").permitAll()
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
+		.antMatchers(HttpMethod.POST, "/usuarios").permitAll()
 		.anyRequest().authenticated()
 		//qualquer requisição autenticada .and().formLogin();
 		.and().csrf().disable()
