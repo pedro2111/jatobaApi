@@ -78,15 +78,5 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
         .antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
 
 	}
-	@Bean
-    CorsConfigurationSource corsConfigurationSource() 
-    {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://restaurantedarosa.herokuapp.com"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
 
 }

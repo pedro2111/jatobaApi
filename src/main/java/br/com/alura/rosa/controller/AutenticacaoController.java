@@ -27,7 +27,7 @@ public class AutenticacaoController {
 	@Autowired
 	private TokenService tokenService;
 	
-	@CrossOrigin(origins ="https://restaurantedarosa.herokuapp.com:8080")
+	@CrossOrigin(origins ="https://restaurantedarosa.herokuapp.com")
 	@PostMapping
 	public ResponseEntity<TokenDto> autenticar (@RequestBody @Valid LoginFormDto form){
 		
