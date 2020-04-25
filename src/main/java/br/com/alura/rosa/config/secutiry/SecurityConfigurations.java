@@ -82,7 +82,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() 
     {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://cozinhadarosa.herokuapp.com"));
+        configuration.setAllowedOrigins(Arrays.asList("https://restaurantedarosa.herokuapp.com"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
