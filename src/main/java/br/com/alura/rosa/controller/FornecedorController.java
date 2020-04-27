@@ -31,7 +31,8 @@ public class FornecedorController {
 	@GetMapping
 	public List<Fornecedor> listar (){
 		
-		List<Fornecedor> fornecedores = fornecedorRepository.findAll();
+		//List<Fornecedor> fornecedores = fornecedorRepository.findAll();
+		List<Fornecedor> fornecedores = fornecedorRepository.findByOrderByNomeAsc();
 		return fornecedores;
 	}
 	
