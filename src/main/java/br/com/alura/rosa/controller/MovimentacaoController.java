@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +18,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.alura.rosa.controller.dto.MovimentacaoDto;
 import br.com.alura.rosa.controller.form.MovimentacaoFormDto;
-import br.com.alura.rosa.modelo.Cliente;
 import br.com.alura.rosa.modelo.Movimentacao;
 import br.com.alura.rosa.repository.ClienteRepository;
 import br.com.alura.rosa.repository.ContaRepository;
@@ -34,6 +35,8 @@ public class MovimentacaoController {
 	
 	@Autowired
 	MovimentacaoRepository movRepo;
+	
+	private static final Logger logger = LoggerFactory.getLogger(Movimentacao.class);
 	
 	
 	@PostMapping
@@ -59,5 +62,54 @@ public class MovimentacaoController {
 		return movimentacoes;
 	}
 	
+	@GetMapping("/listarClientesSemMovimentacoes")
+	public List<?> listarClienteSemMovimentacao() {
+		
+		List<?> movimentacoes = movRepo.findClienteSemMovimentacao();
+		
+		
+		return movimentacoes;
+	}
+	
+	@GetMapping("/listarClientesContaSemMovimentacoes")
+	public List<?> listarClienteContaSemMovimentacao() {
+		
+		List<?> movimentacoes = movRepo.findClienteContaSemMovimentcao();
+			
+	
+		return movimentacoes;
+	}
+	
+	@GetMapping("listarTotalClienteMovimentacoes")
+	public List<?> listarTotalClienteMovimentacao(){
+		
+		List<?> totalMov = movRepo.findTotalClienteMovimentacao();
+		
+		
+		return totalMov;
+		
+	}
+	
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
