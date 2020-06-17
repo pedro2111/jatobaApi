@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.alura.rosa.controller.dto.ContaDto;
 import br.com.alura.rosa.controller.form.ContaFormDto;
+import br.com.alura.rosa.modelo.Cliente;
 import br.com.alura.rosa.modelo.Conta;
 import br.com.alura.rosa.repository.ClienteRepository;
 import br.com.alura.rosa.repository.ContaRepository;
@@ -73,6 +74,17 @@ public class ContaController {
 		contaRepository.save(conta);
 		
 		return ResponseEntity.ok(conta);
+		
+	}
+	
+	@GetMapping("/{id}")
+	public List<ContaDto> listarContaCliente(@PathVariable Long id) {
+		
+		Cliente cliente = clienteRepository.getOne(id);
+		
+		List<Conta> contas = contaRepository.findContaByCliente(cliente);
+		
+		return ContaDto.converter(contas);
 		
 	}
 

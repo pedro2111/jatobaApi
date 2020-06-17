@@ -9,7 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.alura.rosa.controller.dto.MovimentacaoDto;
 import br.com.alura.rosa.controller.form.MovimentacaoFormDto;
+import br.com.alura.rosa.modelo.Cliente;
+import br.com.alura.rosa.modelo.Conta;
 import br.com.alura.rosa.modelo.Movimentacao;
 import br.com.alura.rosa.repository.ClienteRepository;
 import br.com.alura.rosa.repository.ContaRepository;
@@ -89,6 +93,37 @@ public class MovimentacaoController {
 		return totalMov;
 		
 	}
+	
+	@GetMapping("/{id}/listarMovimentacoesCliente")
+	public List<MovimentacaoDto> listarMovimentacoesCliente(@PathVariable Long id){
+		
+		Cliente cliente = cliRepo.getOne(id);
+		
+		List<Movimentacao> movimentacoes = movRepo.findMovimentacoesByClienteId(cliente);
+		
+		return MovimentacaoDto.converter(movimentacoes);
+		
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deletar (@PathVariable Long id){
+		
+		movRepo.deleteById(id);
+		
+		return ResponseEntity.ok().build();
+		
+	}
+	@GetMapping("/conta/{id}")
+	public List<MovimentacaoDto> listarMovimentacoesConta(@PathVariable Long id) {
+		
+		Conta conta = contaRepo.getOne(id);
+		
+		List<Movimentacao> movimentacoes = movRepo.findMovimentacoesByContaId(conta);
+		
+		return MovimentacaoDto.converter(movimentacoes);
+		
+	}
+	
 	
 	
 

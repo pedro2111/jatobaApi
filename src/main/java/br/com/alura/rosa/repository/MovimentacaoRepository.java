@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import br.com.alura.rosa.modelo.Cliente;
+import br.com.alura.rosa.modelo.Conta;
 import br.com.alura.rosa.modelo.Movimentacao;
 
 public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long>{
@@ -55,6 +57,12 @@ public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long
 			nativeQuery = true)
 	List<?> findClienteContaSemMovimentcao();
 
+	@Query(value = "SELECT m FROM Movimentacao m LEFT JOIN m.conta c where m.cliente = :cliente and c.dt_fechamento is null ORDER BY m.id DESC")
+	List<Movimentacao> findMovimentacoesByClienteId(@Param("cliente") Cliente cliente);
+
+	@Query(value = "SELECT m FROM Movimentacao m WHERE m.conta = :conta ORDER BY m.id DESC")
+	List<Movimentacao> findMovimentacoesByContaId(@Param("conta") Conta conta);
+
 	
 	
 	/*
@@ -68,7 +76,7 @@ public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long
 			
 			@Query(value = "SELECT new br.com.alura.rosa.controller.dto.MovimentacaoDto(distinct on (c.nome) c.nome, m.id, " +
 			"dt_movimentacao, observacao, tipo, valor, cliente_id, conta_id) " +
-			"FROM public.movimentacao m join public.cliente c on c.id = m.cliente_id " +
+			"FROM public.movimentacao m join public.cliente c on c.id = m.cliente_id " + 
 			"order by c.nome, m.id desc",
 			nativeQuery = true)
 	List<Movimentacao> findIlderlan();
