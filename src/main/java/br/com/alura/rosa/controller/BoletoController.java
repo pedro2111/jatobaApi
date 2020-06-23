@@ -9,6 +9,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,7 +51,9 @@ public class BoletoController {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
-	@GetMapping
+	//listar normal, sem paginação
+	
+	@GetMapping("/listarBoletos")
 	@ResponseBody
 	@Cacheable(value = "listaDeBoletos")
 	public List<BoletoDto> listar (){
@@ -55,6 +61,17 @@ public class BoletoController {
 		List<Boleto> boletos = boletoRepository.findByOrderByIdDesc();
 		
 		return BoletoDto.converter(boletos);
+		
+	}
+	
+	@GetMapping
+	@ResponseBody
+	@Cacheable(value = "listaDeBoletos")
+	public Page<BoletoDto> listarPaginado (@PageableDefault(sort = "status" ,direction = Direction.ASC) Pageable paginacao){
+		
+		Page<Boleto> boletos = boletoRepository.findAll(paginacao);
+		
+		return BoletoDto.converterPaginacao(boletos);
 		
 	}
 	

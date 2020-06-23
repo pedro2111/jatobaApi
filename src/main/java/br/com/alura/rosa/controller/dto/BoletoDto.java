@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+
 import br.com.alura.rosa.modelo.Boleto;
 import br.com.alura.rosa.modelo.StatusBoleto;
 
@@ -75,6 +77,11 @@ public class BoletoDto {
 	public static List<BoletoDto> converter(List<Boleto> boletos) {
 		
 		return boletos.stream().map(BoletoDto::new).collect(Collectors.toList());
+		
+	}
+	public static Page<BoletoDto> converterPaginacao(Page<Boleto> boletos) {
+		
+		return boletos.map(BoletoDto::new);
 		
 	}
 	
