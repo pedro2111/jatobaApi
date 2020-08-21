@@ -1,4 +1,4 @@
-package br.com.jatoba.controller.form;
+package br.com.jatoba.formDto;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 

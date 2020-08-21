@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jatoba.config.secutiry.TokenService;
-import br.com.jatoba.controller.dto.TokenDto;
-import br.com.jatoba.controller.form.LoginFormDto;
+import br.com.jatoba.dto.TokenDto;
+import br.com.jatoba.formDto.LoginFormDto;
 
 @RestController
 @RequestMapping("/auth")
@@ -27,7 +27,7 @@ public class AutenticacaoController {
 	@Autowired
 	private TokenService tokenService;
 	
-	@CrossOrigin(origins ="https://restaurantedarosa.herokuapp.com")
+	//@CrossOrigin(origins ="https://restaurantedarosa.herokuapp.com")
 	@PostMapping
 	public ResponseEntity<TokenDto> autenticar (@RequestBody @Valid LoginFormDto form){
 		

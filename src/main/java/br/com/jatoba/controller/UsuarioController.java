@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.jatoba.controller.dto.UsuarioDto;
+import br.com.jatoba.dto.UsuarioDto;
 import br.com.jatoba.modelo.Usuario;
 import br.com.jatoba.repository.UsuarioRepository;
 
@@ -49,7 +49,7 @@ public class UsuarioController {
 		}
 		
 	}
-	@CrossOrigin(origins ="https://restaurantedarosa.herokuapp.com")
+	//@CrossOrigin(origins ="https://restaurantedarosa.herokuapp.com")
 	@PostMapping
 	public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid UsuarioDto usuarioDto,UriComponentsBuilder uriBuilder){
 		

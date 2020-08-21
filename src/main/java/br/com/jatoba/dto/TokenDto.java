@@ -1,4 +1,4 @@
-package br.com.jatoba.controller.dto;
+package br.com.jatoba.dto;
 
 public class TokenDto {
 
