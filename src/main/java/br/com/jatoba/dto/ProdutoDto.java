@@ -1,17 +1,13 @@
-package br.com.jatoba.formDto;
+package br.com.jatoba.dto;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
-import br.com.jatoba.modelo.Categoria;
-import br.com.jatoba.modelo.Imagem;
 import br.com.jatoba.modelo.Produto;
-import br.com.jatoba.repository.CategoriaRepository;
-import br.com.jatoba.repository.ProdutoRepository;
 
-public class ProdutoFormDto {
+public class ProdutoDto {
 	
+	private Long id;
 	private String nome;
 	private String descricao;
 	private BigDecimal preco;
@@ -20,21 +16,50 @@ public class ProdutoFormDto {
 	private BigDecimal profundidade;
 	private BigDecimal peso;
 	private String nomeCategoria;
-	private List<Imagem> imagens = new ArrayList<>();
+	private LocalDate dtCriacao;
 	
 	
-	public String getDescricao() {
-		return descricao;
+	public ProdutoDto(Produto produto) {
+		this.id = produto.getId();
+		this.nome = produto.getNome();
+		this.descricao = produto.getDescricao();
+		this.preco = produto.getPreco();
+		this.altura = produto.getAltura();
+		this.largura = produto.getLargura();
+		this.profundidade = produto.getProfundidade();
+		this.peso = produto.getPreco();
+		this.nomeCategoria = produto.getCategoria().getNome();
+		this.dtCriacao = produto.getDtCriacao();
 	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
 	
+	
+	public LocalDate getDtCriacao() {
+		return dtCriacao;
+	}
+
+
+	public void setDtCriacao(LocalDate dtCriacao) {
+		this.dtCriacao = dtCriacao;
+	}
+
+
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getNome() {
 		return nome;
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 	public BigDecimal getPreco() {
 		return preco;
@@ -72,36 +97,12 @@ public class ProdutoFormDto {
 	public void setNomeCategoria(String nomeCategoria) {
 		this.nomeCategoria = nomeCategoria;
 	}
-	public List<Imagem> getImagens() {
-		return imagens;
-	}
-	public void setImagens(List<Imagem> imagens) {
-		this.imagens = imagens;
+	
+	public static ProdutoDto converter(Produto produto) {
+		
+		return new ProdutoDto(produto);
 	}
 	
 	
-	public Produto converter(CategoriaRepository categoriaRepo) {
-		
-		Categoria categoria = categoriaRepo.findByNome(nomeCategoria);
-		
-		return new Produto(nome,descricao,preco, altura, largura, profundidade, peso, categoria);
-	}
-	
-	public Produto atualizar(Long id, ProdutoRepository produtoRepo) {
-		
-		Produto prod = produtoRepo.getOne(id);
-		
-		prod.setNome(nome);
-		prod.setDescricao(descricao);
-		prod.setPreco(preco);
-		prod.setAltura(altura);
-		prod.setLargura(largura);
-		prod.setProfundidade(profundidade);
-		prod.setPeso(peso);
-		prod.getCategoria().setNome(nomeCategoria);
-		
-		return prod;
-	}
-
 
 }

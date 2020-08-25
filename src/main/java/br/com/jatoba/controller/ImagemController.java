@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -86,6 +87,15 @@ public class ImagemController {
 		return imagens;
 		
 	}
+	@GetMapping("/{id}")
+	public List<Imagem> listarById (@PathVariable Long id){
+		
+		Produto produto  = produtoRepo.getOne(id);
+		
+		List<Imagem> imagens = imagemRepo.findByProduto(produto);
+		return imagens;
+	}
+	
 	@GetMapping("/paginada")
 	public Page<Imagem> listarPaginado(@PageableDefault(sort = "id", direction = Direction.DESC) Pageable paginacao){
 		
