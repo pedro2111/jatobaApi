@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,6 +59,7 @@ public class ImagemController {
 			String folder = "";
 			
 			if(bi == null) {
+				
 				return ResponseEntity.badRequest().body("imagem inválida");
 			}
 			
@@ -66,6 +68,7 @@ public class ImagemController {
 			folder = cloudService.setFolder(produto);
 			
 			Map result = cloudService.upload(multipartfile, folder);
+			logger.info(result.toString());
 			
 			this.logger.info(result.toString());
 			
@@ -103,6 +106,14 @@ public class ImagemController {
 		
 		
 		return imagens;
+	}
+	
+	@DeleteMapping
+	public ResponseEntity<Map> delete(@RequestParam("public_id") String public_id) throws IOException {
+		
+		Map result = cloudService.delete(public_id); 
+		
+		return ResponseEntity.ok(result);
 	}
 
 }
