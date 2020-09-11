@@ -2,6 +2,8 @@ package br.com.jatoba.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -108,10 +111,14 @@ public class ImagemController {
 		return imagens;
 	}
 	
-	@DeleteMapping
-	public ResponseEntity<Map> delete(@RequestParam("public_id") String public_id) throws IOException {
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Map> delete(@PathVariable("id") Long id) throws IOException  {
 		
-		Map result = cloudService.delete(public_id); 
+		Imagem img = imagemRepo.getOne(id);	
+		
+		Map result = cloudService.delete(img.getPublic_id());
+		
+		imagemRepo.delete(img);
 		
 		return ResponseEntity.ok(result);
 	}

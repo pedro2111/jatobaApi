@@ -24,4 +24,7 @@ public interface ImagemRepository  extends JpaRepository<Imagem, Long>{
 	@Query("SELECT i FROM Imagem i WHERE i.produto = :produto ORDER BY i.id DESC")
 	List<Imagem> findByProduto(@Param("produto") Produto produto);
 
+	@Query("DELETE from Imagem i where i.produto = :produto")
+	void deleteByProduto(@Param("produto") Produto produto);
+
 }
