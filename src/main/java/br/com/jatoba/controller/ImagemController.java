@@ -102,6 +102,15 @@ public class ImagemController {
 		return imagens;
 	}
 	
+	@GetMapping("/produtoCapa/{id}")
+	public Imagem listarByIdCapa (@PathVariable Long id){
+		
+		Produto produto  = produtoRepo.getOne(id);
+		
+		Imagem imagens = imagemRepo.findByProdutoCapa(produto);
+		return imagens;
+	}
+	
 	@GetMapping("/paginada")
 	public Page<Imagem> listarPaginado(@PageableDefault(sort = "id", direction = Direction.DESC) Pageable paginacao){
 		

@@ -3,8 +3,10 @@ package br.com.jatoba.formDto;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.jatoba.modelo.Imagem;
 import br.com.jatoba.modelo.Orcamento;
 import br.com.jatoba.modelo.Produto;
+import br.com.jatoba.repository.ImagemRepository;
 import br.com.jatoba.repository.ProdutoRepository;
 
 public class OrcamentoFormDto {
@@ -15,6 +17,7 @@ public class OrcamentoFormDto {
 	private String assunto;
 	private String mensagem;
 	private List<Long> produto_ids = new ArrayList<>();
+
 	
 	public String getNome() {
 		return nome;
@@ -53,19 +56,21 @@ public class OrcamentoFormDto {
 		this.produto_ids = produto_ids;
 	}
 	
-	public Orcamento convert(ProdutoRepository produtoRepo) {
+	public Orcamento convert(ImagemRepository imagemRepo, ProdutoRepository produtoRepo) {
 		
-		List<Produto> produtos = new ArrayList<Produto>();
+		List<Imagem> imagens = new ArrayList<Imagem>();
 		
 		produto_ids.forEach(produto_id -> {
 			
 			Produto produto = produtoRepo.getOne(produto_id);
 			
-			produtos.add(produto);
+			Imagem imagem = imagemRepo.findByProdutoCapa(produto);
+			
+			imagens.add(imagem);
 			
 		});
 		
-		return new Orcamento(nome, email, telefone, assunto, mensagem, produtos);
+		return new Orcamento(nome, email, telefone, assunto, mensagem, imagens);
 	}
 	
 	

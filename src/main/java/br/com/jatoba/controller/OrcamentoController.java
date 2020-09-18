@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jatoba.formDto.OrcamentoFormDto;
 import br.com.jatoba.modelo.Orcamento;
+import br.com.jatoba.repository.ImagemRepository;
 import br.com.jatoba.repository.OrcamentoRepository;
 import br.com.jatoba.repository.ProdutoRepository;
 
@@ -25,10 +26,13 @@ public class OrcamentoController {
 	@Autowired
 	ProdutoRepository produtoRepo;
 	
+	@Autowired
+	ImagemRepository imagemRepo;
+	
 	@PostMapping
 	public ResponseEntity<Orcamento> cadastrar (@RequestBody OrcamentoFormDto orcamentoForm){
 		
-		Orcamento orcamento = orcamentoForm.convert(produtoRepo);
+		Orcamento orcamento = orcamentoForm.convert(imagemRepo, produtoRepo);
 		
 		orcamentorepo.save(orcamento);
 		

@@ -27,7 +27,7 @@ public class Orcamento {
 	private LocalDate dtCriacao = LocalDate.now();
 	
 	@ManyToMany
-	private List<Produto> produto = new ArrayList<>();
+	private List<Imagem> imagens = new ArrayList<>();
 	
 	public Orcamento () {
 		
@@ -44,13 +44,13 @@ public class Orcamento {
 	
 
 
-	public Orcamento(String nome, String email, String telefone, String assunto, String mensagem, List<Produto> produto) {
+	public Orcamento(String nome, String email, String telefone, String assunto, String mensagem, List<Imagem> imagens) {
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
 		this.assunto = assunto;
 		this.mensagem = mensagem;
-		this.produto = produto;
+		this.imagens = imagens;
 	}
 
 
@@ -110,12 +110,12 @@ public class Orcamento {
 		this.dtCriacao = dtCriacao;
 	}
 
-	public List<Produto> getProduto() {
-		return produto;
+	public List<Imagem> getImagens() {
+		return imagens;
 	}
 
-	public void setProduto(List<Produto> produto) {
-		this.produto = produto;
+	public void setImagens(List<Imagem> imagens) {
+		this.imagens = imagens;
 	}
 	
 
