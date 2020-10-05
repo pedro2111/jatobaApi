@@ -29,117 +29,109 @@ import br.com.jatoba.services.CloudinaryService;
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
-	
+
 	@Autowired
 	ProdutoRepository produtoRepo;
-	
+
 	@Autowired
 	CategoriaRepository categoriaRepo;
-	
+
 	@Autowired
 	ImagemRepository imagemRepo;
-	
+
 	@Autowired
 	CloudinaryService cloudService;
-	
+
 	Logger logger = LoggerFactory.getLogger(ProdutoController.class);
-	
+
 	@PostMapping
-	public ResponseEntity<Produto> cadastrar(@RequestBody ProdutoFormDto produtoform){
-		
+	public ResponseEntity<Produto> cadastrar(@RequestBody ProdutoFormDto produtoform) {
+
 		Produto produto = produtoform.converter(categoriaRepo);
-		
+
 		produtoRepo.save(produto);
-		
+
 		return ResponseEntity.ok(produto);
 	}
-	
+
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<Produto> atualizar(@PathVariable Long id, @RequestBody ProdutoFormDto form) {
-		
-		Produto produto = form.atualizar(id,produtoRepo);
+
+		Produto produto = form.atualizar(id, produtoRepo);
 		produtoRepo.save(produto);
-		
+
 		return ResponseEntity.ok(produto);
 	}
-	
+
 	@GetMapping
-	public List<Produto> listar () {
-		
+	public List<Produto> listar() {
+
 		List<Produto> produtos = produtoRepo.findByOrderByIdDesc();
-		
+
 		return produtos;
 	}
-	
+
 	@GetMapping("/listarImagens")
 	public List<?> listarImagens() {
-		
+
 		List<?> produtos = produtoRepo.findProdutoImagens();
-		
+
 		return produtos;
-		
+
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<ProdutoDto> detalhar (@PathVariable Long id){
-		
+	public ResponseEntity<ProdutoDto> detalhar(@PathVariable Long id) {
+
 		Produto produto = produtoRepo.getOne(id);
-		
+
 		return ResponseEntity.ok().body(new ProdutoDto(produto));
-		
+
 	}
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deletar (@PathVariable Long id){
-		
-		//Produto produto = produtoRepo.getOne(id);
-		
-		//imagemRepo.deleteByProduto(produto);
-		
+	public ResponseEntity<?> deletar(@PathVariable Long id) {
+
+		// Produto produto = produtoRepo.getOne(id);
+
+		// imagemRepo.deleteByProduto(produto);
+
 		produtoRepo.deleteById(id);
-		
-				
+
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@PutMapping("/trocarStatus/{id}")
-	public ResponseEntity<Produto> toogleStatus (@PathVariable Long id){
-		
+	public ResponseEntity<Produto> toogleStatus(@PathVariable Long id) {
+
 		Produto prod = produtoRepo.getOne(id);
 
-		
-		if(prod.getStatus().equals(StatusProduto.ATIVO)) {
-			
+		if (prod.getStatus().equals(StatusProduto.ATIVO)) {
+
 			prod.setStatus(StatusProduto.INATIVO);
-		
-		}else {
-			
+
+		} else {
+
 			prod.setStatus(StatusProduto.ATIVO);
 		}
-		
+
 		produtoRepo.save(prod);
-		
+
 		return ResponseEntity.ok(prod);
 	}
-	
+
+	@PutMapping("/like/{id}")
+	public ResponseEntity<Produto> like(@PathVariable Long id) {
+
+		Produto produto = produtoRepo.getOne(id);
+
+		produto.setCurtidas(produto.getCurtidas() + 1);
+
+		produtoRepo.save(produto);
+
+		return ResponseEntity.ok(produto);
+
+	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

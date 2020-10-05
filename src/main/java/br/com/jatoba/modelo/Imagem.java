@@ -8,8 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.springframework.data.domain.Page;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -40,7 +38,9 @@ public class Imagem {
 		this.url = url;
 		this.tipo = tipo;
 		this.produto = produto;
+
 	}
+	
 
 	
 	public TipoImagem getTipo() {

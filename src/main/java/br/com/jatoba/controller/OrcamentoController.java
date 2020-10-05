@@ -42,7 +42,7 @@ public class OrcamentoController {
 	@GetMapping
 	public List<Orcamento> listar(){
 		
-		List<Orcamento> orcamentos = orcamentorepo.findByOrderById();
+		List<Orcamento> orcamentos = orcamentorepo.findTop50ByOrderByIdDesc();
 		
 		return orcamentos;
 	}
