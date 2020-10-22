@@ -72,6 +72,22 @@ public class OrcamentoFormDto {
 		
 		return new Orcamento(nome, email, telefone, assunto, mensagem, imagens);
 	}
+
+	public Produto getOneProdutoFromProdutoIds(ProdutoRepository produtoRepo){
+
+		if(produto_ids.size() > 0){
+			Produto produto = produtoRepo.getOne(produto_ids.get(0));
+			return produto;
+		}
+		else{
+			Produto produto = new Produto();
+			return produto;			
+		}
+		
+
+		
+
+	}
 	
 	
 

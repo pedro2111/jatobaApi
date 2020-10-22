@@ -112,12 +112,30 @@ public class ImagemController {
 	}
 	
 	@GetMapping("/paginada")
-	public Page<Imagem> listarPaginado(@PageableDefault(sort = "id", direction = Direction.DESC) Pageable paginacao){
+	public Page<Imagem> listarPaginado(@PageableDefault(sort = "id", direction = Direction.DESC) Pageable paginacao, @RequestParam(required = false) List<Long> categoria){
 		
-		Page<Imagem> imagens = imagemRepo.findCapaPaginacao(paginacao);
+		
+
+		Page<Imagem> imagens = imagemRepo.findCapaPaginacao(paginacao,categoria);
 		
 		
 		return imagens;
+	}
+	
+	@GetMapping("/mainProdutosMaisCurtidos")
+	public Page<Imagem> listarMainProdutos(@PageableDefault(size = 3) Pageable paginacao){
+
+		Page<Imagem> mainProdutos = imagemRepo.findMainProdutos(paginacao);
+		
+		return mainProdutos;
+	}
+	
+	@GetMapping("/mainUltimosProdutos")
+	public Page<Imagem> listarMainUltimosProdutos(@PageableDefault(size = 3) Pageable paginacao){
+
+		Page<Imagem> mainProdutos = imagemRepo.findMainUltimosProdutos(paginacao);
+		
+		return mainProdutos;
 	}
 	
 	@DeleteMapping("/{id}")

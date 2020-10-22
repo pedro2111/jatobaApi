@@ -18,8 +18,8 @@ public interface ImagemRepository  extends JpaRepository<Imagem, Long>{
 	@Query("SELECT img FROM Imagem img where img.tipo = 'CAPA' ORDER BY id DESC")
 	List<Imagem> findCapa();
 
-	@Query("SELECT img FROM Imagem img where img.tipo = 'CAPA' ORDER BY id DESC")
-	Page<Imagem> findCapaPaginacao(Pageable paginacao);
+	@Query("SELECT img FROM Imagem img where img.tipo = 'CAPA' and img.produto.categoria.id in :ids ORDER BY id DESC")
+	Page<Imagem> findCapaPaginacao(Pageable paginacao,@Param("ids") List<Long> categoria);
 
 	@Query("SELECT i FROM Imagem i WHERE i.produto = :produto ORDER BY i.id DESC")
 	List<Imagem> findByProduto(@Param("produto") Produto produto);
@@ -29,5 +29,11 @@ public interface ImagemRepository  extends JpaRepository<Imagem, Long>{
 
 	@Query("DELETE from Imagem i where i.produto = :produto")
 	void deleteByProduto(@Param("produto") Produto produto);
+
+	@Query("SELECT i FROM Imagem i where i.tipo = 'CAPA' ORDER BY i.produto.curtidas DESC")
+	Page<Imagem> findMainProdutos(Pageable paginacao);
+
+	@Query("SELECT i FROM Imagem i where i.tipo = 'CAPA' ORDER BY i.produto.id DESC")
+	Page<Imagem> findMainUltimosProdutos(Pageable paginacao);
 
 }
